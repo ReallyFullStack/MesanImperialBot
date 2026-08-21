@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import 'dotenv/config'
 
-import { Client, Collection, Partials } from 'discord.js'
+import { Client, GatewayIntentBits, Collection, Partials } from 'discord.js'
 import { readdirSync } from 'fs'
 import type ApplicationCommand from './templates/ApplicationCommand.js'
 import type Event from './templates/Event.js'
@@ -14,7 +13,12 @@ await deployGlobalCommands()
 // Discord client object
 global.client = Object.assign(
 	new Client({
-		intents: [],
+		intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.DirectMessages,
+            GatewayIntentBits.MessageContent
+		],
 		partials: [Partials.Channel],
 	}),
 	{
