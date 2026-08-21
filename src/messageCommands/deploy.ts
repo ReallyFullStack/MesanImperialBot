@@ -48,6 +48,10 @@ export default new MessageCommand({
 				console.log('Started refreshing application (/) commands.')
 
 				await rest.put(Routes.applicationCommands(CLIENT_ID), {
+					body: [],
+				})
+
+				await rest.put(Routes.applicationCommands(CLIENT_ID), {
 					body: commands,
 				})
 
@@ -76,6 +80,13 @@ export default new MessageCommand({
 
 			try {
 				console.log('Started refreshing application (/) commands.')
+
+				await rest.put(
+					Routes.applicationGuildCommands(CLIENT_ID, message.guild?.id as string),
+					{
+						body: [],
+					},
+				)
 
 				await rest.put(
 					Routes.applicationGuildCommands(CLIENT_ID, message.guild?.id as string),
