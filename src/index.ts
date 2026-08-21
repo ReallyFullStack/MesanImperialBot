@@ -14,10 +14,10 @@ await deployGlobalCommands()
 global.client = Object.assign(
 	new Client({
 		intents: [
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.DirectMessages,
-            GatewayIntentBits.MessageContent
+			GatewayIntentBits.Guilds,
+			GatewayIntentBits.GuildMessages,
+			GatewayIntentBits.DirectMessages,
+			GatewayIntentBits.MessageContent,
 		],
 		partials: [Partials.Channel],
 	}),
@@ -32,8 +32,17 @@ const commandFiles: string[] = readdirSync('./commands').filter(
 	(file) => file.endsWith('.js') || file.endsWith('.ts'),
 )
 for (const file of commandFiles) {
-	const command: ApplicationCommand = (await import(`./commands/${file}`))
-		.default as ApplicationCommand
+	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+	const imp: unknown = (await import(`./commands/${file}`)).default
+
+	if (!(imp instanceof ApplicationCommand)) {
+		throw new TypeError(
+			`Expected ${ApplicationCommand.name}, got ${imp.constructor.name} instead.`,
+		)
+	}
+	/* eslint-enable @typescript-eslint/no-unsafe-member-access */
+
+	const command: ApplicationCommand = imp
 	client.commands.set(command.data.name, command)
 }
 
@@ -41,8 +50,15 @@ const msgCommandFiles: string[] = readdirSync('./messageCommands').filter(
 	(file) => file.endsWith('.js') || file.endsWith('.ts'),
 )
 for (const file of msgCommandFiles) {
-	const command: MessageCommand = (await import(`./messageCommands/${file}`))
-		.default as MessageCommand
+	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+	const imp: unknown = (await import(`./messageCommands/${file}`)).default
+
+	if (!(imp instanceof MessageCommand)) {
+		throw new TypeError(`Expected ${MessageCommand.name}, got ${imp.constructor.name} instead.`)
+	}
+	/* eslint-enable @typescript-eslint/no-unsafe-member-access */
+
+	const command: MessageCommand = imp
 	client.msgCommands.set(command.name, command)
 }
 
@@ -52,7 +68,15 @@ const eventFiles: string[] = readdirSync('./events').filter(
 )
 
 for (const file of eventFiles) {
-	const event: Event = (await import(`./events/${file}`)).default as Event
+	/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+	const imp: unknown = (await import(`./events/${file}`)).default
+
+	if (!(imp instanceof Event)) {
+		throw new TypeError(`Expected ${Event.name}, got ${imp.constructor.name} instead.`)
+	}
+	/* eslint-enable @typescript-eslint/no-unsafe-member-access */
+
+	const event: Event = imp
 	if (event.once) {
 		client.once(event.name, (...args) => event.execute(...args))
 	} else {
