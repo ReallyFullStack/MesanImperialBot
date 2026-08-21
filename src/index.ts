@@ -2,9 +2,9 @@ import 'dotenv/config'
 
 import { Client, GatewayIntentBits, Collection, Partials } from 'discord.js'
 import { readdirSync } from 'fs'
-import type ApplicationCommand from './templates/ApplicationCommand.js'
-import type Event from './templates/Event.js'
-import type MessageCommand from './templates/MessageCommand.js'
+import ApplicationCommand from './templates/ApplicationCommand.js'
+import Event from './templates/Event.js'
+import MessageCommand from './templates/MessageCommand.js'
 import deployGlobalCommands from './deployGlobalCommands.js'
 const { TOKEN } = process.env
 
@@ -37,7 +37,9 @@ for (const file of commandFiles) {
 
 	if (!(imp instanceof ApplicationCommand)) {
 		throw new TypeError(
-			`Expected ${ApplicationCommand.name}, got ${imp.constructor.name} instead.`,
+			`Expected ${ApplicationCommand.name}, got ${
+				(imp as any)?.constructor?.name ?? typeof imp
+			} instead.`,
 		)
 	}
 	/* eslint-enable @typescript-eslint/no-unsafe-member-access */
@@ -54,7 +56,11 @@ for (const file of msgCommandFiles) {
 	const imp: unknown = (await import(`./messageCommands/${file}`)).default
 
 	if (!(imp instanceof MessageCommand)) {
-		throw new TypeError(`Expected ${MessageCommand.name}, got ${imp.constructor.name} instead.`)
+		throw new TypeError(
+			`Expected ${MessageCommand.name}, got ${
+				(imp as any)?.constructor?.name ?? typeof imp
+			} instead.`,
+		)
 	}
 	/* eslint-enable @typescript-eslint/no-unsafe-member-access */
 
@@ -72,7 +78,9 @@ for (const file of eventFiles) {
 	const imp: unknown = (await import(`./events/${file}`)).default
 
 	if (!(imp instanceof Event)) {
-		throw new TypeError(`Expected ${Event.name}, got ${imp.constructor.name} instead.`)
+		throw new TypeError(
+			`Expected ${Event.name}, got ${(imp as any)?.constructor?.name ?? typeof imp} instead.`,
+		)
 	}
 	/* eslint-enable @typescript-eslint/no-unsafe-member-access */
 
