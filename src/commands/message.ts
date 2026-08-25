@@ -41,7 +41,7 @@ export default new ApplicationCommand({
 	async execute(interaction): Promise<void> {
 		const title = interaction.options.getString('title', true)
 		const message = interaction.options.getString('message', true)
-		const color = interaction.options.getString('color') || '#37a66f'
+		const color = interaction.options.getString('color') || '#e25809'
 		const anonymous = interaction.options.getBoolean('anonymous') || false
 		const author = interaction.options.getMentionable('author')
 
