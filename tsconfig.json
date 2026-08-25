@@ -3,6 +3,7 @@
     "compilerOptions": {
         "resolveJsonModule": true,
         "outDir": "./dist",
+        "moduleResolution": "nodenext",
         "module": "ESNext",
         "esModuleInterop": true
     }
