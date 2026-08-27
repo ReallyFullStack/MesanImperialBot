@@ -1,3 +1,6 @@
+# Google Docs Markdown render cache
+data/cache/*
+
 # Google API Service Account key file
 googleapicredentials.json
 

@@ -19,6 +19,7 @@
     "dependencies": {
         "@discordjs/rest": "^2.0.1",
         "@googleapis/docs": "^10.0.0",
+        "@googleapis/drive": "^21.0.0",
         "better-sqlite3": "^13.0.3",
         "discord.js": "^14.13.0",
         "dotenv": "^16.3.1"
@@ -36,5 +37,8 @@
         "rimraf": "^5.0.1",
         "tsc-watch": "^6.0.4",
         "typescript": "^5.1.6"
+    },
+    "allowScripts": {
+        "better-sqlite3@13.0.3": true
     }
 }
