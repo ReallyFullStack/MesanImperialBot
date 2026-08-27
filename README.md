@@ -37,6 +37,20 @@ GOOGLE_APPLICATION_CREDENTIALS="../data/googleapicredentials.json" # Path to you
 GOOGLE_SERVICEACCOUNT_EMAIL="SERVICEACCOUNT_EMAIL_HERE"            # Your Google Service Account's e-mail address
 ```
 
+### Run
+
+-   To run the dev environment, use:
+
+    ```sh
+    npm run dev
+    ```
+
+-   To run the production environment:
+
+    ```sh
+    npm run prod
+    ```
+
 ## License
 
 This project is licensed under the GNU Affero General Public License, version 3 or later, see [`LICENSE`](./LICENSE) for more information.
