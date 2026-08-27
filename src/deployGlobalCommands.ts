@@ -26,7 +26,7 @@ export default async function deployGlobalCommands() {
 		await rest.put(Routes.applicationGuildCommands(CLIENT_ID, DEFAULT_GUILD_ID), {
 			body: commands,
 		})
-		await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands })
+		// await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands })
 
 		console.log('Successfully reloaded application (/) commands.')
 	} catch (error) {
