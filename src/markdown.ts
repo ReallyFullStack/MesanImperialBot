@@ -53,7 +53,6 @@ function parseStructuralElement(
 		}[e.paragraph.paragraphStyle!.namedStyleType!]
 
 		const parsedRuns: string[] = e.paragraph.elements!.map((r) => parseParagraphElement(r))
-		console.log((heading ? heading + ' ' : '') + bullet + parsedRuns.join(''))
 		return (heading ? heading + ' ' : '') + bullet + parsedRuns.join('')
 	} else if (e.sectionBreak != undefined) {
 		return ''
