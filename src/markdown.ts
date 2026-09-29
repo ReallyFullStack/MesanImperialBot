@@ -30,11 +30,13 @@ function parseStructuralElement(
 				'\u2800\u2800'.repeat(nestingLevel) + // Braille Blank character, to force visible spacing
 				parseParagraphElement({
 					textRun: {
-						content: levelInfo.glyphFormat!.replace(/%\d/, () =>
-							levelInfo.glyphType
-								? indexToString(idx, levelInfo.glyphType as GlyphType)
-								: '-',
-						),
+						content: levelInfo.glyphFormat
+							? levelInfo.glyphFormat.replace(/%\d/, () =>
+									levelInfo.glyphType
+										? indexToString(idx, levelInfo.glyphType as GlyphType)
+										: '-',
+							  )
+							: '',
 						textStyle: levelInfo.textStyle,
 					},
 				}) +
