@@ -23,7 +23,7 @@ const makeLawEmbed = async (
 		embeds: [
 			new EmbedBuilder()
 				.setTitle(lawRecord.name)
-				.setDescription(await getDocMarkdown(lawRecord.ggdocs_id))
+				.setDescription((await getDocMarkdown(lawRecord.ggdocs_id)).slice(0, 4096))
 				.setColor(Colors.Green),
 		],
 		components: [],
