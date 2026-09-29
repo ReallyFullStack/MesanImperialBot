@@ -28,7 +28,7 @@ export async function getDocMarkdown(documentId: string): Promise<string> {
 		.get(documentId) as Pick<LawRecord, 'last_cached'>
 	const { data: metadata } = await driveClient.files.get({
 		fileId: documentId,
-		fields: 'modifiedTime',
+		fields: 'modifiedTime,name',
 	})
 	const lastModifiedTimestamp = Math.floor(Date.parse(metadata.modifiedTime as string) / 1000)
 
@@ -43,8 +43,9 @@ export async function getDocMarkdown(documentId: string): Promise<string> {
 	const markdown = generateMarkdown(data)
 
 	await writeFile(cachePath, markdown, 'utf-8')
-	db.prepare('UPDATE laws SET last_cached = ? WHERE ggdocs_id = ?').run(
+	db.prepare('UPDATE laws SET last_cached = ?, name = ? WHERE ggdocs_id = ?').run(
 		currentTimestamp,
+		metadata.name,
 		documentId,
 	)
 
