@@ -1,6 +1,8 @@
 # Imperial Bot
 
-This bot is used on the Discord server of Mesa on the [Insert Name SMP](https://insmp.miraheze.org/wiki/INSMP).
+This bot was meant to be used on the Discord server of Mesa on the [Insert Name SMP](https://insmp.miraheze.org/wiki/INSMP).
+However, it won't but I continue making it personally. For people from Mesa, don't consider any of the information in this repo binding,
+it's just for my personal, individual and independent larp, not an actual stance on New Mesa or an act of secession or whatever.
 It is used to display laws, send fancy messages, display the constitution, register and manage companies, announce new laws in the gazette, ...
 
 ## Get Started
@@ -13,7 +15,7 @@ cd MesanImperialBot
 npm install
 ```
 
-It has for dependencies `discord.js`, `better-sqlite3`, `@googleapis/docs`, `@googleapis/drive` and `dotenv`.
+It has for major dependencies `discord.js`, `better-sqlite3`, `@googleapis/docs`, `@googleapis/drive` and `dotenv`.
 
 Then, you will have to create an SQLite3 database at `data/database.db` based on the `data/database.sql` schema:
 
@@ -25,17 +27,7 @@ You will have to register both an application on the Discord Dev Portal, and an 
 the Google Docs API and Google Drive API, create a Service Account and download the key file for the Service Account. For the bot to access Google Docs
 documents, you have to or make the document available to everyone with the link, or share it with the bot's Service Account e-mail.
 
-Finally, you will have to rename `src/RENAME.env` to `.env` and populate it with:
-
-```toml
-TOKEN="BOT_TOKEN_HERE"                                             # Bot token from the Discord Dev Portal
-CLIENT_ID="BOT_CLIENTID_HERE"                                      # Client ID from the Discord Dev Portal
-DEFAULT_GUILD_ID="DEFAULTGUID_ID_HERE"                             # Guild ID of the bot's main Discord server
-OWNER_ID="YOUR_USERID_HERE"                                        # Your Discord User ID
-PREFIX="!"                                                         # Prefix for message commands
-GOOGLE_APPLICATION_CREDENTIALS="../data/googleapicredentials.json" # Path to your Google Service Account key file
-GOOGLE_SERVICEACCOUNT_EMAIL="SERVICEACCOUNT_EMAIL_HERE"            # Your Google Service Account's e-mail address
-```
+Finally, you will have to rename [`src/RENAME.env`](./src/RENAME.env) to `.env` and populate it with the required information.
 
 ### Run
 
