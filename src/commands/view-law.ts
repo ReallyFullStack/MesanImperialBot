@@ -17,13 +17,16 @@ const makeLawEmbed = async (
 	interaction: ChatInputCommandInteraction,
 	lawId: string,
 ): Promise<void> => {
-	const lawRecord = db.prepare('SELECT * FROM laws WHERE id = ?').get(lawId) as LawRecord
+	const lawRecord = db
+		.prepare('SELECT name, ggdocs_id FROM laws WHERE id = ?')
+		.get(lawId) as Pick<LawRecord, 'name' | 'ggdocs_id'>
+	const markdown = await getDocMarkdown(lawRecord.ggdocs_id)
 
 	const data: BaseMessageOptions = {
 		embeds: [
 			new EmbedBuilder()
 				.setTitle(lawRecord.name)
-				.setDescription((await getDocMarkdown(lawRecord.ggdocs_id)).slice(0, 4096))
+				.setDescription(markdown.slice(0, 4096))
 				.setColor(Colors.Green),
 		],
 		components: [],
