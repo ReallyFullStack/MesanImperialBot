@@ -18,14 +18,14 @@ const makeLawEmbed = async (
 	lawId: string,
 ): Promise<void> => {
 	const lawRecord = db
-		.prepare('SELECT name, ggdocs_id FROM laws WHERE id = ?')
-		.get(lawId) as Pick<LawRecord, 'name' | 'ggdocs_id'>
+		.prepare('SELECT name, ggdocs_id, status FROM laws WHERE id = ?')
+		.get(lawId) as Pick<LawRecord, 'name' | 'ggdocs_id' | 'status'>
 	const markdown = await getDocMarkdown(lawRecord.ggdocs_id)
 
 	const data: BaseMessageOptions = {
 		embeds: [
 			new EmbedBuilder()
-				.setTitle(lawRecord.name)
+				.setTitle(`${lawRecord.name} (${lawRecord.status})`)
 				.setDescription(markdown.slice(0, 4096))
 				.setColor(Colors.Green),
 		],
@@ -57,14 +57,14 @@ export default new ApplicationCommand({
 			return
 		}
 
-		const laws = db.prepare('SELECT id, name FROM laws').all() as Pick<
+		const laws = db.prepare('SELECT id, name, status FROM laws').all() as Pick<
 			LawRecord,
-			'id' | 'name'
+			'id' | 'name' | 'status'
 		>[]
 		const dropdownOptions = laws.map((l) =>
 			new StringSelectMenuOptionBuilder()
 				.setLabel(`${l.id}: ${l.name}`)
-				.setDescription('description')
+				.setDescription(`Status: ${l.status}`)
 				.setValue(l.id),
 		)
 		const response = await interaction.reply({
