@@ -14,5 +14,6 @@ export interface LawRecord {
 	id: string
 	name: string
 	ggdocs_id: string
+	status: 'Drafting' | 'Debating' | 'Voting' | 'Passed' | 'Rejected'
 	last_cached: number
 }
