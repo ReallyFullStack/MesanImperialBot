@@ -1,10 +1,10 @@
 import {
 	ActionRowBuilder,
 	BaseMessageOptions,
-	ChatInputCommandInteraction,
 	Colors,
 	ComponentType,
 	EmbedBuilder,
+	RepliableInteraction,
 	SlashCommandBuilder,
 	StringSelectMenuBuilder,
 	StringSelectMenuOptionBuilder,
@@ -13,8 +13,8 @@ import ApplicationCommand from '../templates/ApplicationCommand.js'
 import { db, LawRecord } from '../database.js'
 import { getDocMarkdown } from '../docs.js'
 
-const makeLawEmbed = async (
-	interaction: ChatInputCommandInteraction,
+export const makeLawEmbed = async (
+	interaction: RepliableInteraction,
 	lawId: string,
 ): Promise<void> => {
 	const lawRecord = db
