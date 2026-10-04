@@ -11,3 +11,15 @@ CREATE TABLE companies (
 	name TEXT NOT NULL,
 	type TEXT NOT NULL
 );
+
+CREATE TABLE votes (
+	id INTEGER PRIMARY KEY,
+	voters_role INT NOT NULL,
+	date_start INT NOT NULL DEFAULT (unixepoch('now')),
+	date_end INT CHECK (date_end IS NULL OR date_end >= date_start),
+	law_id TEXT REFERENCES laws(id),
+	vote_type TEXT CHECK (vote_type IN ('Legislative election', 'Prime Minister election', 'Motion of censure', 'Motion of impeachment')),
+	matter TEXT,
+	results TEXT NOT NULL DEFAULT '{}' CHECK (json_valid(results) AND json_type(results) = 'object'),
+	CHECK ((law_id IS NOT NULL) + (vote_type IS NOT NULL) + (matter IS NOT NULL) = 1)
+);
