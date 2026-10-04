@@ -21,5 +21,6 @@ CREATE TABLE votes (
 	vote_type TEXT CHECK (vote_type IN ('Legislative election', 'Prime Minister election', 'Motion of censure', 'Motion of impeachment')),
 	matter TEXT,
 	results TEXT NOT NULL DEFAULT '{}' CHECK (json_valid(results) AND json_type(results) = 'object'),
+	has_voted TEXT NOT NULL DEFAULT '[]' CHECK (json_valid(has_voted) AND json_type(has_voted) = 'array'),
 	CHECK ((law_id IS NOT NULL) + (vote_type IS NOT NULL) + (matter IS NOT NULL) = 1)
 );

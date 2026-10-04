@@ -42,4 +42,5 @@ export interface VoteRecord {
 	vote_type: VoteType | null
 	matter: string | null
 	results: string
+	has_voted: string
 }
