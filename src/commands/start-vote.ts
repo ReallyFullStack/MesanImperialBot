@@ -145,10 +145,7 @@ export default new ApplicationCommand({
 			withResponse: true,
 		})
 
-		if (!resp.resource) throw new Error('')
-		if (!resp.resource.message) throw new Error('')
-
-		const collector = resp.resource.message.createMessageComponentCollector({
+		const collector = resp.resource!.message!.createMessageComponentCollector({
 			componentType: ComponentType.Button,
 			time: (duration || 1) * 3_600_000, // 1 hour or {duration} hours
 		})

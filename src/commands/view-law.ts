@@ -22,6 +22,11 @@ export const makeLawEmbed = async (
 	const lawRecord = db
 		.prepare('SELECT name, ggdocs_id, status FROM laws WHERE id = ?')
 		.get(lawId) as Pick<LawRecord, 'name' | 'ggdocs_id' | 'status'>
+
+	if (lawRecord == undefined) {
+		throw new Error(`No such law: ${lawId}.`)
+	}
+
 	const markdown = await getDocMarkdown(lawRecord.ggdocs_id)
 
 	const data: BaseMessageOptions = {
@@ -93,10 +98,7 @@ export default new ApplicationCommand({
 			withResponse: true,
 		})
 
-		if (!response.resource) throw new Error('')
-		if (!response.resource.message) throw new Error('')
-
-		const collector = response.resource.message.createMessageComponentCollector({
+		const collector = response.resource!.message!.createMessageComponentCollector({
 			componentType: ComponentType.StringSelect,
 			time: 3_600_000, // 1 hour
 		})
