@@ -1,6 +1,8 @@
 import {
 	ActionRowBuilder,
 	BaseMessageOptions,
+	ButtonBuilder,
+	ButtonStyle,
 	Colors,
 	ComponentType,
 	EmbedBuilder,
@@ -29,7 +31,14 @@ export const makeLawEmbed = async (
 				.setDescription(markdown.slice(0, 4096))
 				.setColor(Colors.Green),
 		],
-		components: [],
+		components: [
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				new ButtonBuilder()
+					.setLabel('Open Google Docs')
+					.setStyle(ButtonStyle.Link)
+					.setURL(`https://docs.google.com/document/d/${lawRecord.ggdocs_id}`),
+			),
+		],
 	}
 
 	if (interaction.replied) {
