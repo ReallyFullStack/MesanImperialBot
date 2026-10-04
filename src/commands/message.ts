@@ -76,7 +76,9 @@ export default new ApplicationCommand({
 				name = author.name
 				iconURL =
 					author.iconURL() ||
-					`https://www.singlecolorimage.com/get/${author.color.toString(16)}/512x512.png`
+					`https://www.singlecolorimage.com/get/${author.colors.primaryColor.toString(
+						16,
+					)}/512x512.png`
 			}
 
 			if (name && iconURL) {
