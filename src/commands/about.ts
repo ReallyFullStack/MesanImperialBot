@@ -15,7 +15,7 @@ export default new ApplicationCommand({
 			THEME_COLOR: color,
 			CITIZEN_ROLE_ID: citizenRoleID,
 		} = process.env
-		const citizenRole = interaction.guild!.roles.cache.get(citizenRoleID!)
+		const citizenRole = (await interaction.guild!.roles.fetch(citizenRoleID!))!
 		const viewLawId = (await interaction.guild!.commands.fetch()).find(
 			(c) => c.name === viewLaw.data.name,
 		)?.id
