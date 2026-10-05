@@ -114,9 +114,8 @@ export default new ApplicationCommand({
 		const choices = db
 			.prepare('SELECT id, name FROM laws WHERE name LIKE ?')
 			.all(`%${focusedValue}%`) as Pick<LawRecord, 'id' | 'name'>[]
-		const filtered = choices.filter((choice) => choice.name.startsWith(focusedValue))
 		await interaction.respond(
-			filtered.map((choice) => ({ name: `${choice.id}: ${choice.name}`, value: choice.id })),
+			choices.map((choice) => ({ name: `${choice.id}: ${choice.name}`, value: choice.id })),
 		)
 	},
 })
