@@ -53,7 +53,6 @@ export default new ApplicationCommand({
 		const parsedResults = JSON.parse(data.results) as { [k: string]: number }
 		const parsedHasVoted = JSON.parse(data.has_voted) as string[]
 		const userIdHash = createHash('sha256').update(interaction.user.id).digest('hex')
-		console.log(data)
 
 		if (!(interaction.member!.roles as GuildMemberRoleManager).cache.has(data.voters_role)) {
 			throw new Error(
