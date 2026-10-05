@@ -160,7 +160,7 @@ export default new ApplicationCommand({
 	async autocomplete(interaction): Promise<void> {
 		const focusedValue = interaction.options.getFocused()
 		const laws = db
-			.prepare('SELECT id, name FROM laws WHERE name LIKE ?')
+			.prepare('SELECT id, name FROM laws WHERE name LIKE ? LIMIT 25')
 			.all(`%${focusedValue}%`) as Pick<LawRecord, 'id' | 'name'>[]
 		const choices = Object.entries(VoteType)
 			.filter((t) => t[1].startsWith(focusedValue))
@@ -171,6 +171,6 @@ export default new ApplicationCommand({
 					value: choice.id,
 				})),
 			)
-		await interaction.respond(choices)
+		await interaction.respond(choices.slice(0, 25))
 	},
 })

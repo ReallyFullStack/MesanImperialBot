@@ -112,7 +112,7 @@ export default new ApplicationCommand({
 	async autocomplete(interaction): Promise<void> {
 		const focusedValue = interaction.options.getFocused()
 		const choices = db
-			.prepare('SELECT id, name FROM laws WHERE name LIKE ?')
+			.prepare('SELECT id, name FROM laws WHERE name LIKE ? LIMIT 25')
 			.all(`%${focusedValue}%`) as Pick<LawRecord, 'id' | 'name'>[]
 		await interaction.respond(
 			choices.map((choice) => ({ name: `${choice.id}: ${choice.name}`, value: choice.id })),
