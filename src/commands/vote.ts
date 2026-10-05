@@ -1,5 +1,11 @@
 import { createHash } from 'crypto'
-import { EmbedBuilder, MessageFlags, SlashCommandBuilder } from 'discord.js'
+import {
+	EmbedBuilder,
+	GuildMemberRoleManager,
+	MessageFlags,
+	SlashCommandBuilder,
+	roleMention,
+} from 'discord.js'
 import ApplicationCommand from '../templates/ApplicationCommand.js'
 import { VoteRecord, db } from '../database.js'
 
@@ -27,19 +33,35 @@ export default new ApplicationCommand({
 		const data = db
 			.prepare(
 				`SELECT
-					date_start, date_end,
-					law_id, vote_type,
+					voters_role, date_start,
+					date_end, law_id, vote_type,
 					matter, results, has_voted
 				FROM votes WHERE id = ?`,
 			)
 			.get(session) as Pick<
 			VoteRecord,
-			'date_start' | 'date_end' | 'law_id' | 'vote_type' | 'matter' | 'results' | 'has_voted'
+			| 'voters_role'
+			| 'date_start'
+			| 'date_end'
+			| 'law_id'
+			| 'vote_type'
+			| 'matter'
+			| 'results'
+			| 'has_voted'
 		>
 		const currentTime = Math.floor(Date.now() / 1000)
 		const parsedResults = JSON.parse(data.results) as { [k: string]: number }
 		const parsedHasVoted = JSON.parse(data.has_voted) as string[]
 		const userIdHash = createHash('sha256').update(interaction.user.id).digest('hex')
+		console.log(data)
+
+		if (!(interaction.member!.roles as GuildMemberRoleManager).cache.has(data.voters_role)) {
+			throw new Error(
+				`You cannot vote on this vote because it is restricted to ${roleMention(
+					data.voters_role,
+				)}.`,
+			)
+		}
 
 		if (
 			data.date_start > currentTime ||
