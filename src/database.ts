@@ -35,7 +35,7 @@ export enum VoteType {
 
 export interface VoteRecord {
 	id: number
-	voters_role: number
+	voters_role: string
 	date_start: number
 	date_end: number | null
 	law_id: string | null

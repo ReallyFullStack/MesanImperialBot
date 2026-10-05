@@ -14,7 +14,7 @@ CREATE TABLE companies (
 
 CREATE TABLE votes (
 	id INTEGER PRIMARY KEY,
-	voters_role INT NOT NULL,
+	voters_role TEXT NOT NULL,
 	date_start INT NOT NULL DEFAULT (unixepoch('now')),
 	date_end INT CHECK (date_end IS NULL OR date_end >= date_start),
 	law_id TEXT REFERENCES laws(id),
