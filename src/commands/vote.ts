@@ -107,9 +107,10 @@ export default new ApplicationCommand({
 				const sessions = db
 					.prepare(
 						`SELECT id, law_id, vote_type, matter FROM votes WHERE
-							law_id LIKE @matter
+							(law_id LIKE @matter
 							OR vote_type LIKE @matter
-							OR matter LIKE @matter
+							OR matter LIKE @matter)
+							AND (date_end IS NULL OR date_end > unixepoch('now'))
 						LIMIT 25`,
 					)
 					.all({ matter: `%${val.value}%` }) as Pick<
