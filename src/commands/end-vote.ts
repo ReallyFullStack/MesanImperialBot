@@ -84,9 +84,9 @@ export default new ApplicationCommand({
 
 							return {
 								name: o[0],
-								value: `${frac * 100} % (${o[1]})\n${'█'.repeat(bar)}${'▁'.repeat(
-									barLength - bar,
-								)}`,
+								value: `${(frac * 100).toFixed(2)} % (${o[1]})\n${'█'.repeat(
+									bar,
+								)}${'▁'.repeat(barLength - bar)}`,
 							}
 						}),
 					)
@@ -97,9 +97,11 @@ export default new ApplicationCommand({
 
 							return {
 								name: 'Blanks',
-								value: `${blanks} (${frac * 100} % of all ballots)\n${'█'.repeat(
-									bar,
-								)}${'▁'.repeat(barLength - bar)}`,
+								value: `${blanks} (${(frac * 100).toFixed(
+									2,
+								)} % of all ballots)\n${'█'.repeat(bar)}${'▁'.repeat(
+									barLength - bar,
+								)}`,
 							}
 						})(),
 					),
