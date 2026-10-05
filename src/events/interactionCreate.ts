@@ -1,4 +1,4 @@
-import { BaseInteraction, Events } from 'discord.js'
+import { BaseInteraction, Events, MessageFlags } from 'discord.js'
 import type ApplicationCommand from '../templates/ApplicationCommand.js'
 import Event from '../templates/Event.js'
 
@@ -16,7 +16,7 @@ export default new Event({
 					console.error(`Failed to find execution handler for ${command.data.name}`)
 					await interaction.reply({
 						content: 'There was an error while executing this command!',
-						ephemeral: true,
+						flags: MessageFlags.Ephemeral,
 					})
 					return
 				}
@@ -26,7 +26,7 @@ export default new Event({
 				console.error(error)
 				await interaction.reply({
 					content: 'There was an error while executing this command!',
-					ephemeral: true,
+					flags: MessageFlags.Ephemeral,
 				})
 			}
 		} else if (interaction.isAutocomplete()) {

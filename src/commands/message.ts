@@ -7,6 +7,7 @@ import {
 	GuildMember,
 	Colors,
 	TextChannel,
+	MessageFlags,
 } from 'discord.js'
 import ApplicationCommand from '../templates/ApplicationCommand.js'
 
@@ -96,7 +97,7 @@ export default new ApplicationCommand({
 							.setTitle('Anonymous Message')
 							.setDescription('Your anonymous message has been sent successfully.'),
 					],
-					ephemeral: true,
+					flags: MessageFlags.Ephemeral,
 				})
 			}
 			return

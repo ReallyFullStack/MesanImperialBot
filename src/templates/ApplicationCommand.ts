@@ -8,6 +8,7 @@ import {
 	type SlashCommandBuilder,
 	type SlashCommandSubcommandsOnlyBuilder,
 	type SlashCommandOptionsOnlyBuilder,
+	MessageFlags,
 } from 'discord.js'
 import type SubCommand from './SubCommand.js'
 
@@ -51,7 +52,7 @@ export default class ApplicationCommand {
 				if (!commandName) {
 					await interaction.reply({
 						content: "I couldn't understand that command!",
-						ephemeral: true,
+						flags: MessageFlags.Ephemeral,
 					})
 				} else {
 					try {
@@ -67,7 +68,7 @@ export default class ApplicationCommand {
 						console.error(error)
 						await interaction.reply({
 							content: 'An error occured when attempting to execute that command!',
-							ephemeral: true,
+							flags: MessageFlags.Ephemeral,
 						})
 					}
 				}
@@ -133,7 +134,7 @@ export default class ApplicationCommand {
 									: 'An unknown error occurred',
 							),
 					],
-					ephemeral: true,
+					flags: MessageFlags.Ephemeral,
 				})
 			}
 		}
