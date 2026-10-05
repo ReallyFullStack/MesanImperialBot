@@ -6,6 +6,7 @@ import {
 	Colors,
 	ComponentType,
 	EmbedBuilder,
+	Message,
 	RepliableInteraction,
 	SlashCommandBuilder,
 	StringSelectMenuBuilder,
@@ -18,6 +19,8 @@ import { getDocMarkdown } from '../docs.js'
 export const makeLawEmbed = async (
 	interaction: RepliableInteraction,
 	lawId: string,
+	markdown: string | null = null,
+	page: number = 1,
 ): Promise<void> => {
 	const lawRecord = db
 		.prepare('SELECT name, ggdocs_id, status FROM laws WHERE id = ?')
@@ -27,14 +30,17 @@ export const makeLawEmbed = async (
 		throw new Error(`No such law: ${lawId}.`)
 	}
 
-	const markdown = await getDocMarkdown(lawRecord.ggdocs_id)
+	if (markdown == null) {
+		markdown = await getDocMarkdown(lawRecord.ggdocs_id)
+	}
 
 	const data: BaseMessageOptions = {
 		embeds: [
 			new EmbedBuilder()
 				.setTitle(`${lawRecord.name} (${lawRecord.status})`)
-				.setDescription(markdown.slice(0, 4096))
-				.setColor(Colors.Green),
+				.setDescription(markdown.slice(4096 * (page - 1), 4096 * page))
+				.setColor(Colors.Green)
+				.setAuthor({ name: `Page ${page}/${Math.ceil(markdown.length / 4096)}` }),
 		],
 		components: [
 			new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -42,15 +48,36 @@ export const makeLawEmbed = async (
 					.setLabel('Open Google Docs')
 					.setStyle(ButtonStyle.Link)
 					.setURL(`https://docs.google.com/document/d/${lawRecord.ggdocs_id}`),
+				new ButtonBuilder()
+					.setCustomId('page-down')
+					.setLabel('◀ Previous Page')
+					.setStyle(ButtonStyle.Secondary)
+					.setDisabled(page == 1),
+				new ButtonBuilder()
+					.setCustomId('page-up')
+					.setLabel('Next Page ▶')
+					.setStyle(ButtonStyle.Secondary)
+					.setDisabled(4096 * page >= markdown.length),
 			),
 		],
 	}
 
+	let message: Message
 	if (interaction.replied) {
-		await interaction.editReply(data)
-		return
+		message = await interaction.editReply(data)
+	} else {
+		message = (await interaction.reply({ ...data, withResponse: true })).resource!.message!
 	}
-	await interaction.reply(data)
+	const collector = message.createMessageComponentCollector({
+		componentType: ComponentType.Button,
+		time: 3_600_000, // 1 hour
+	})
+
+	// eslint-disable-next-line @typescript-eslint/no-misused-promises
+	collector.on('collect', async (i) => {
+		await i.deferUpdate()
+		await makeLawEmbed(interaction, lawId, markdown, page + (i.customId == 'page-up' ? 1 : -1))
+	})
 }
 
 export default new ApplicationCommand({
