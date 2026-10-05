@@ -7,7 +7,9 @@ import {
 	Role,
 	RoleColors,
 	SlashCommandBuilder,
+	TimestampStyles,
 	roleMention,
+	time,
 } from 'discord.js'
 import ApplicationCommand from '../templates/ApplicationCommand.js'
 import { db, LawRecord, VoteRecord, VoteType } from '../database.js'
@@ -109,7 +111,7 @@ export default new ApplicationCommand({
 		}
 
 		if (endDate) {
-			message += ` Vote ends <t:${endDate}:R>.`
+			message += ` Vote ends ${time(endDate, TimestampStyles.RelativeTime)}.`
 		}
 
 		message += `\n\nVote using the </${vote.data.name}:${(
