@@ -86,8 +86,10 @@ for (const file of eventFiles) {
 
 	const event: Event = imp
 	if (event.once) {
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		client.once(event.name, (...args) => event.execute(...args))
 	} else {
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		client.on(event.name, (...args) => event.execute(...args))
 	}
 }
