@@ -76,6 +76,7 @@ export const makeLawEmbed = async (
 	// eslint-disable-next-line @typescript-eslint/no-misused-promises
 	collector.on('collect', async (i) => {
 		await i.deferUpdate()
+		collector.stop()
 		await makeLawEmbed(interaction, lawId, markdown, page + (i.customId == 'page-up' ? 1 : -1))
 	})
 }
