@@ -79,6 +79,14 @@ export const makeLawEmbed = async (
 		collector.stop()
 		await makeLawEmbed(interaction, lawId, markdown, page + (i.customId == 'page-up' ? 1 : -1))
 	})
+
+	// eslint-disable-next-line @typescript-eslint/no-misused-promises
+	collector.on('end', async () => {
+		;(data.components![0] as ActionRowBuilder<ButtonBuilder>).components.forEach((b) =>
+			b.setDisabled(true),
+		)
+		await interaction.editReply({ components: [...data.components!] })
+	})
 }
 
 export default new ApplicationCommand({
@@ -109,20 +117,19 @@ export default new ApplicationCommand({
 				.setDescription(`Status: ${l.status}`)
 				.setValue(l.id),
 		)
+		const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+			new StringSelectMenuBuilder()
+				.setCustomId('law_dropdown')
+				.setPlaceholder('Select law...')
+				.addOptions(...dropdownOptions),
+		)
 		const response = await interaction.reply({
 			embeds: [
 				new EmbedBuilder()
 					.setTitle('Registry of Laws of the Mesan Empire')
 					.setDescription('Select any law from the dropdown to consult its text.'),
 			],
-			components: [
-				new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-					new StringSelectMenuBuilder()
-						.setCustomId('law_dropdown')
-						.setPlaceholder('Select law...')
-						.addOptions(...dropdownOptions),
-				),
-			],
+			components: [row],
 			withResponse: true,
 		})
 
@@ -140,7 +147,8 @@ export default new ApplicationCommand({
 
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		collector.on('end', async () => {
-			await interaction.editReply({ components: [] })
+			row.components.forEach((c) => c.setDisabled(true))
+			await interaction.editReply({ components: [row] })
 		})
 	},
 	async autocomplete(interaction): Promise<void> {
