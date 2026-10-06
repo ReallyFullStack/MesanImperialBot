@@ -134,7 +134,13 @@ export default new ApplicationCommand({
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		collector.on('collect', async (i) => {
 			await i.deferUpdate()
+			collector.stop()
 			await makeLawEmbed(interaction, i.values[0])
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-misused-promises
+		collector.on('end', async () => {
+			await interaction.editReply({ components: [] })
 		})
 	},
 	async autocomplete(interaction): Promise<void> {
