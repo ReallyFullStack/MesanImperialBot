@@ -1,5 +1,3 @@
-import 'dotenv/config'
-
 import { Client, GatewayIntentBits, Collection, Partials } from 'discord.js'
 import { readdirSync } from 'fs'
 import ApplicationCommand from './templates/ApplicationCommand.js'
