@@ -17,6 +17,7 @@ import { db, LawRecord, VoteRecord, VoteType } from '../database.js'
 import { makeLawEmbed } from './view-law.js'
 import vote from './vote.js'
 import config from '../config.js'
+import { toOrdinal } from '../utils.js'
 
 export default new ApplicationCommand({
 	data: new SlashCommandBuilder()
@@ -70,10 +71,17 @@ export default new ApplicationCommand({
 			'id' | 'name'
 		>[]
 
-		if (Object.keys(VoteType).includes(providedMatter)) {
-			voteType = VoteType[providedMatter as keyof typeof VoteType]
-		} else if (allLaws.map((l) => l.id).includes(providedMatter)) {
+		if (allLaws.map((l) => l.id).includes(providedMatter)) {
 			lawId = providedMatter
+			voteType = VoteType.Law
+		} else if (providedMatter != 'Law' && Object.keys(VoteType).includes(providedMatter)) {
+			voteType = VoteType[providedMatter as keyof typeof VoteType]
+			const num = (
+				db.prepare('SELECT COUNT(id) FROM votes WHERE vote_type = ?').get(voteType) as {
+					'COUNT(id)': number
+				}
+			)['COUNT(id)']
+			matter = `${toOrdinal(num + 1)} ${voteType}`
 		} else {
 			matter = providedMatter
 		}
@@ -81,20 +89,20 @@ export default new ApplicationCommand({
 		const { lastInsertRowid: rowId } = db
 			.prepare(
 				`INSERT INTO votes (
-				voters_role,
-				date_end,
-				law_id,
-				vote_type,
-				matter,
-				results
-			) VALUES (
-				?,
-				CASE WHEN @hours IS NULL THEN NULL
-				ELSE unixepoch('now', '+' || @hours || ' hours') END,
-				?, ?, ?, ?
-			)`,
+					voters_role,
+					date_end,
+					vote_type,
+					law_id,
+					matter,
+					results
+				) VALUES (
+					?,
+					CASE WHEN @hours IS NULL THEN NULL
+					ELSE unixepoch('now', '+' || @hours || ' hours') END,
+					?, ?, ?, ?
+				)`,
 			)
-			.run(role.id, lawId, voteType, matter, JSON.stringify(options), {
+			.run(role.id, voteType, lawId, matter, JSON.stringify(options), {
 				hours: duration,
 			})
 
@@ -175,7 +183,7 @@ export default new ApplicationCommand({
 			.all(`%${focusedValue}%`) as Pick<LawRecord, 'id' | 'name'>[]
 		const choices = [
 			...Object.entries(VoteType)
-				.filter((t) => t[1].startsWith(focusedValue))
+				.filter((t) => t[1] != VoteType.Law && t[1].startsWith(focusedValue))
 				.map((t) => ({ name: t[1], value: t[0] })),
 			...laws.map((choice) => ({
 				name: `${choice.id}: ${choice.name}`,

@@ -34,8 +34,8 @@ export default new ApplicationCommand({
 			.prepare(
 				`SELECT
 					voters_role, date_start,
-					date_end, law_id, vote_type,
-					matter, results, has_voted
+					date_end, law_id, matter,
+					results, has_voted
 				FROM votes WHERE id = ?`,
 			)
 			.get(session) as Pick<
@@ -44,7 +44,6 @@ export default new ApplicationCommand({
 			| 'date_start'
 			| 'date_end'
 			| 'law_id'
-			| 'vote_type'
 			| 'matter'
 			| 'results'
 			| 'has_voted'
@@ -91,7 +90,7 @@ export default new ApplicationCommand({
 		await interaction.reply({
 			embeds: [
 				new EmbedBuilder()
-					.setTitle(`Vote on ${data.law_id ?? data.vote_type ?? data.matter}`)
+					.setTitle(`Vote on ${data.law_id ?? data.matter}`)
 					.setDescription(`You just voted "${ballot}"!`)
 					.setColor(ballot == 'against' ? 'Red' : ballot == 'for' ? 'Green' : 'Grey'),
 			],
@@ -105,21 +104,20 @@ export default new ApplicationCommand({
 			case 'session': {
 				const sessions = db
 					.prepare(
-						`SELECT id, law_id, vote_type, matter FROM votes WHERE
+						`SELECT id, law_id, matter FROM votes WHERE
 							(law_id LIKE @matter
-							OR vote_type LIKE @matter
 							OR matter LIKE @matter)
 							AND (date_end IS NULL OR date_end > unixepoch('now'))
 						LIMIT 25`,
 					)
 					.all({ matter: `%${val.value}%` }) as Pick<
 					VoteRecord,
-					'id' | 'law_id' | 'vote_type' | 'matter'
+					'id' | 'law_id' | 'matter'
 				>[]
 
 				await interaction.respond(
 					sessions.map((s) => ({
-						name: s.law_id ?? (s.vote_type as string) ?? s.matter,
+						name: (s.law_id ?? s.matter)!,
 						value: s.id,
 					})),
 				)

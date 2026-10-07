@@ -26,16 +26,16 @@ export default new ApplicationCommand({
 		const session = interaction.options.getInteger('session', true)
 		const data = db
 			.prepare(
-				'SELECT date_start, date_end, law_id, vote_type, matter, results, has_voted FROM votes WHERE id = ?',
+				'SELECT date_start, date_end, vote_type, law_id, matter, results, has_voted FROM votes WHERE id = ?',
 			)
 			.get(session) as Pick<
 			VoteRecord,
-			'date_start' | 'date_end' | 'law_id' | 'vote_type' | 'matter' | 'results' | 'has_voted'
+			'date_start' | 'date_end' | 'vote_type' | 'law_id' | 'matter' | 'results' | 'has_voted'
 		>
 		const currentTime = Math.floor(Date.now() / 1000)
 		const parsedResults = JSON.parse(data.results) as { [k: string]: number }
 		const parsedHasVoted = JSON.parse(data.has_voted) as string[]
-		const matter = data.law_id ?? data.vote_type ?? data.matter
+		const matter = data.law_id ?? data.matter
 
 		if (
 			data.date_start > currentTime ||
@@ -121,21 +121,17 @@ export default new ApplicationCommand({
 		const val = interaction.options.getFocused()
 		const sessions = db
 			.prepare(
-				`SELECT id, law_id, vote_type, matter FROM votes WHERE
+				`SELECT id, law_id, matter FROM votes WHERE
 					(law_id LIKE @matter
-					OR vote_type LIKE @matter
 					OR matter LIKE @matter)
 					AND (date_end IS NULL OR date_end > unixepoch('now'))
 				LIMIT 25`,
 			)
-			.all({ matter: `%${val}%` }) as Pick<
-			VoteRecord,
-			'id' | 'law_id' | 'vote_type' | 'matter'
-		>[]
+			.all({ matter: `%${val}%` }) as Pick<VoteRecord, 'id' | 'law_id' | 'matter'>[]
 
 		await interaction.respond(
 			sessions.map((s) => ({
-				name: s.law_id ?? (s.vote_type as string) ?? s.matter,
+				name: (s.law_id ?? s.matter)!,
 				value: s.id,
 			})),
 		)

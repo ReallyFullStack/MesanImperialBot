@@ -27,6 +27,7 @@ export interface LawRecord {
 }
 
 export enum VoteType {
+	Law = 'Law',
 	Legistlative = 'Legislative election',
 	PM = 'Prime Minister election',
 	Censure = 'Motion of censure',
