@@ -4,5 +4,13 @@
 	"singleQuote": true,
 	"printWidth": 100,
 	"tabWidth": 4,
-	"useTabs": true
+	"useTabs": true,
+	"overrides": [
+		{
+			"files": ["*.ts.template"],
+			"options": {
+				"parser": "typescript"
+			}
+		}
+	]
 }

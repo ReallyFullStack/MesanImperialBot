@@ -7,7 +7,7 @@
 	"scripts": {
 		"prepare": "husky install",
 		"lint": "eslint --cache --fix src",
-		"prettier": "prettier --write \"src/**/*\"",
+		"prettier": "prettier --write src",
 		"compile": "tsc && npm run copy",
 		"clean": "rimraf dist/",
 		"copy": "npx copyfiles -u 1 src/.env src/**/*.json dist/",
