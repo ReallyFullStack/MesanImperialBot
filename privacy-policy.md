@@ -7,9 +7,9 @@ Last Updated: **01/07/2025**
 Our bot does not store personally identifiable information (PII) unless explicitly provided by the
 user. We may collect:
 
--   User ID
--   Server ID
--   Message content (only for functionality and debugging purposes)
+- User ID
+- Server ID
+- Message content (only for functionality and debugging purposes)
 
 ## 2. How We Use Your Information
 
