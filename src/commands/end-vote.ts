@@ -26,7 +26,7 @@ export default new ApplicationCommand({
 		const currentTime = Math.floor(Date.now() / 1000)
 		const parsedResults = JSON.parse(data.results) as { [k: string]: number }
 		const parsedHasVoted = JSON.parse(data.has_voted) as string[]
-		const matter = data.law_id ?? (data.vote_type as string) ?? data.matter
+		const matter = data.law_id ?? data.vote_type ?? data.matter
 
 		if (
 			data.date_start > currentTime ||

@@ -114,10 +114,9 @@ export default new ApplicationCommand({
 			message += ` Vote ends ${time(endDate, TimestampStyles.RelativeTime)}.`
 		}
 
-		message += `\n\nVote using the </${vote.data.name}:${(
-			await interaction.guild!.commands.fetch()
-		).find((c) => c.name === vote.data.name)
-			?.id}> command with "${providedMatter}" for the \`session\` option.\n\nVoting options:${Object.keys(
+		message += `\n\nVote using the </${vote.data.name}:${
+			(await interaction.guild!.commands.fetch()).find((c) => c.name === vote.data.name)?.id
+		}> command with "${providedMatter}" for the \`session\` option.\n\nVoting options:${Object.keys(
 			options,
 		)
 			.map((e) => `\n- ${e}`)
@@ -164,15 +163,15 @@ export default new ApplicationCommand({
 		const laws = db
 			.prepare('SELECT id, name FROM laws WHERE name LIKE ? LIMIT 25')
 			.all(`%${focusedValue}%`) as Pick<LawRecord, 'id' | 'name'>[]
-		const choices = Object.entries(VoteType)
-			.filter((t) => t[1].startsWith(focusedValue))
-			.map((t) => ({ name: t[1] as string, value: t[0] }))
-			.concat(
-				laws.map((choice) => ({
-					name: `${choice.id}: ${choice.name}`,
-					value: choice.id,
-				})),
-			)
+		const choices = [
+			...Object.entries(VoteType)
+				.filter((t) => t[1].startsWith(focusedValue))
+				.map((t) => ({ name: t[1], value: t[0] })),
+			...laws.map((choice) => ({
+				name: `${choice.id}: ${choice.name}`,
+				value: choice.id,
+			})),
+		]
 		await interaction.respond(choices.slice(0, 25))
 	},
 })

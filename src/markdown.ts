@@ -35,7 +35,7 @@ function parseStructuralElement(
 									levelInfo.glyphType
 										? indexToString(idx, levelInfo.glyphType as GlyphType)
 										: '-',
-							  )
+								)
 							: '',
 						textStyle: levelInfo.textStyle,
 					},
