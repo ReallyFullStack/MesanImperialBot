@@ -10,11 +10,12 @@
 		"prettier": "prettier --write src",
 		"compile": "tsc && npm run copy",
 		"clean": "rimraf dist/",
-		"copy": "npx copyfiles -u 1 src/.env src/**/*.json dist/",
+		"copy": "npx copyfiles -u 1 src/**/*.json dist/",
 		"build": "npm run lint && npm run prettier && npm run clean && npm run compile",
-		"start": "npx copyfiles -u 1 src/.env src/**/*.json dist/ && cd dist && node . && cd ..",
-		"dev": "npm run clean && cd src && tsx watch . && cd ..",
-		"prod": "npm run build && npm run start"
+		"start": "npm run copy && cd dist && node . && cd ..",
+		"dev": "cd src && tsx watch . && cd ..",
+		"prod": "npm run build && npm run start",
+		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@discordjs/rest": "^2.0.1",
