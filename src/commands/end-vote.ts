@@ -1,6 +1,7 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
 import ApplicationCommand from '../templates/ApplicationCommand.js'
 import { VoteRecord, db } from '../database.js'
+import config from '../config.js'
 
 export default new ApplicationCommand({
 	data: new SlashCommandBuilder()
@@ -66,7 +67,7 @@ export default new ApplicationCommand({
 					.setThumbnail(
 						new URL(
 							'./blob/main/data/images/coa_reduced_gray.png?raw=1',
-							process.env.GITHUB,
+							config.about.github,
 						).href,
 					)
 					.setColor(winner == 'against' ? 'Red' : winner == 'for' ? 'Green' : 'Grey')

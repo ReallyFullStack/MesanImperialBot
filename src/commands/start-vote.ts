@@ -15,6 +15,7 @@ import ApplicationCommand from '../templates/ApplicationCommand.js'
 import { db, LawRecord, VoteRecord, VoteType } from '../database.js'
 import { makeLawEmbed } from './view-law.js'
 import vote from './vote.js'
+import config from '../config.js'
 
 export default new ApplicationCommand({
 	data: new SlashCommandBuilder()
@@ -41,7 +42,7 @@ export default new ApplicationCommand({
 	async execute(interaction): Promise<void> {
 		const role =
 			interaction.options.getRole('voters', false) ||
-			interaction.guild!.roles.cache.get(process.env.MP_ROLE_ID!)!
+			interaction.guild!.roles.cache.get(config.roles.mp)!
 		const duration = interaction.options.getNumber('duration', false)
 		const optionsStr = interaction.options.getString('options', false) || 'for,against,blank'
 		const options = Object.fromEntries(

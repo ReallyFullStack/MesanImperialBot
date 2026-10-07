@@ -2,9 +2,10 @@
 import { REST } from '@discordjs/rest'
 import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord.js'
 import { readdirSync } from 'fs'
+import config from './config.js'
 import type ApplicationCommand from './templates/ApplicationCommand.js'
 
-const { TOKEN, CLIENT_ID, DEFAULT_GUILD_ID } = process.env as Record<string, string>
+const { token: TOKEN, clientId: CLIENT_ID, defaultGuildId: DEFAULT_GUILD_ID } = config.discord
 const rest = new REST().setToken(TOKEN)
 
 export default async function deployGlobalCommands() {

@@ -4,13 +4,9 @@ import type ApplicationCommand from '../templates/ApplicationCommand.js'
 import MessageCommand from '../templates/MessageCommand.js'
 import { REST } from '@discordjs/rest'
 import { RESTPostAPIApplicationCommandsJSONBody, Routes } from 'discord.js'
+import config from '../config.js'
 
-const { TOKEN, CLIENT_ID, OWNER_ID, PREFIX } = process.env as {
-	TOKEN: string
-	CLIENT_ID: string
-	OWNER_ID: string
-	PREFIX: string
-}
+const { token: TOKEN, clientId: CLIENT_ID, owner: OWNER_ID, prefix: PREFIX } = config.discord
 
 export default new MessageCommand({
 	name: 'deploy',

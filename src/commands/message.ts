@@ -10,6 +10,7 @@ import {
 	MessageFlags,
 } from 'discord.js'
 import ApplicationCommand from '../templates/ApplicationCommand.js'
+import config from '../config.js'
 
 export default new ApplicationCommand({
 	data: new SlashCommandBuilder()
@@ -42,7 +43,7 @@ export default new ApplicationCommand({
 	async execute(interaction): Promise<void> {
 		const title = interaction.options.getString('title', true)
 		const message = interaction.options.getString('message', true)
-		const color = interaction.options.getString('color') || process.env.THEME_COLOR!
+		const color = interaction.options.getString('color') || config.infos.brandColor
 		const anonymous = interaction.options.getBoolean('anonymous') || false
 		const author = interaction.options.getMentionable('author')
 

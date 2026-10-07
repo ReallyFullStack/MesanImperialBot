@@ -6,7 +6,7 @@ import ApplicationCommand from './templates/ApplicationCommand.js'
 import Event from './templates/Event.js'
 import MessageCommand from './templates/MessageCommand.js'
 import deployGlobalCommands from './deployGlobalCommands.js'
-const { TOKEN } = process.env
+import config from './config.js'
 
 await deployGlobalCommands()
 
@@ -94,4 +94,4 @@ for (const file of eventFiles) {
 	}
 }
 
-await client.login(TOKEN)
+await client.login(config.discord.token)

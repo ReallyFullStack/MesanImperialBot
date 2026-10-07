@@ -27,17 +27,17 @@ You will have to register both an application on the Discord Dev Portal, and an 
 the Google Docs API and Google Drive API, create a Service Account and download the key file for the Service Account. For the bot to access Google Docs
 documents, you have to or make the document available to everyone with the link, or share it with the bot's Service Account e-mail.
 
-Finally, you will have to rename [`src/RENAME.env`](./src/RENAME.env) to `.env` and populate it with the required information.
+Finally, you will have to rename [`src/config.ts.template`](./src/config.ts.template) to `config.ts` and populate it with the required information.
 
 ### Run
 
--   To run the dev environment, use:
+- To run the dev environment, use:
 
     ```sh
     npm run dev
     ```
 
--   To run the production environment:
+- To run the production environment:
 
     ```sh
     npm run prod

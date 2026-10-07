@@ -1,3 +1,6 @@
+# Bot config file
+src/config.ts
+
 # Google Docs Markdown render cache
 data/cache/*
 

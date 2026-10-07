@@ -1,5 +1,6 @@
 import MessageCommand from '../templates/MessageCommand.js'
-const { OWNER_ID, PREFIX } = process.env
+import config from '../config.js'
+const { owner: OWNER_ID, prefix: PREFIX } = config.discord
 
 export default new MessageCommand({
 	name: 'undeploy',

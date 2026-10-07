@@ -1,7 +1,8 @@
 import type MessageCommand from '../templates/MessageCommand.js'
 import Event from '../templates/Event.js'
 import { Events, Message } from 'discord.js'
-const { PREFIX } = process.env as { PREFIX: string }
+import config from '../config.js'
+const { prefix: PREFIX } = config.discord
 
 export default new Event({
 	name: Events.MessageCreate,

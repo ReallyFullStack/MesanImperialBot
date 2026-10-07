@@ -1,0 +1,44 @@
+export interface ImperialBotConfig {
+	infos: { botName: string; brandColor: `#${string}` }
+	about: { author: string; github: string; version: string }
+	roles: { [k: string]: `${number}` }
+	googleApi: { serviceAccountEmail: string; credentialsPath: '../data/googleapicredentials.json' }
+	discord: {
+		token: string
+		clientId: `${number}`
+		defaultGuildId: `${number}`
+		owner: `${number}`
+		prefix: string
+	}
+}
+
+const config: ImperialBotConfig = {
+	infos: {
+		botName: 'YOUR_BOT_NAME',
+		brandColor: '#HEX_BRAND_COLOR_HERE',
+	},
+	about: {
+		author: 'YOUR_NAME_HERE',
+		github: 'YOUR_FORKS_REPO_URL',
+		version: 'CURRENT_VERSION',
+	},
+	roles: {
+		citizen: 'ROLE_ID_HERE',
+		mp: 'MEMBER_OF_PARLIAMENT_ROLE_ID_HERE',
+	},
+	googleApi: {
+		serviceAccountEmail: 'SERVICEACCOUNT_EMAIL_HERE',
+		credentialsPath: '../data/googleapicredentials.json',
+	},
+	discord: {
+		token: 'BOT_TOKEN_HERE',
+		clientId: 'BOT_CLIENTID_HERE',
+		defaultGuildId: 'DEFAULTGUID_ID_HERE',
+		owner: 'YOUR_USERID_HERE',
+		prefix: '!',
+	},
+}
+
+process.env.GOOGLE_APPLICATION_CREDENTIALS = config.googleApi.credentialsPath
+
+export default config
