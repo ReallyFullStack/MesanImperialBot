@@ -2,9 +2,10 @@
 	"extends": "@tsconfig/node20/tsconfig.json",
 	"compilerOptions": {
 		"resolveJsonModule": true,
+		"rootDir": "./src",
 		"outDir": "./dist",
 		"moduleResolution": "nodenext",
-		"module": "ESNext",
+		"module": "nodenext",
 		"esModuleInterop": true
 	}
 }
