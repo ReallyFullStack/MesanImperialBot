@@ -1,4 +1,4 @@
-import { EmbedBuilder, SlashCommandBuilder } from 'discord.js'
+import { EmbedBuilder, GuildMemberRoleManager, SlashCommandBuilder } from 'discord.js'
 import ApplicationCommand from '../templates/ApplicationCommand.js'
 import { VoteRecord, db } from '../database.js'
 import config from '../config.js'
@@ -7,14 +7,22 @@ export default new ApplicationCommand({
 	data: new SlashCommandBuilder()
 		.setName('end-vote')
 		.setDescription('End a voting session.')
-		.addIntegerOption((o) =>
-			o
+		.addIntegerOption((option) =>
+			option
 				.setName('session')
 				.setAutocomplete(true)
 				.setRequired(true)
 				.setDescription('For which session to end the vote'),
 		),
 	async execute(interaction): Promise<void> {
+		if (
+			!(interaction.member!.roles as GuildMemberRoleManager).cache.hasAny(
+				...config.roleScopes.moderator,
+			)
+		) {
+			throw new Error('You do not have the required permissions to execute this action.')
+		}
+
 		const session = interaction.options.getInteger('session', true)
 		const data = db
 			.prepare(

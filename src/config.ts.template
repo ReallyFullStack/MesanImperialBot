@@ -1,6 +1,7 @@
 export interface ImperialBotConfig {
 	infos: { botName: string; brandColor: `#${string}` }
 	about: { author: string; github: string; version: string }
+	roleScopes: { [k: string]: `${number}`[] }
 	roles: { [k: string]: `${number}` }
 	googleApi: { serviceAccountEmail: string; credentialsPath: '../data/googleapicredentials.json' }
 	discord: {
@@ -21,6 +22,9 @@ const config: ImperialBotConfig = {
 		author: 'YOUR_NAME_HERE',
 		github: 'YOUR_FORKS_REPO_URL',
 		version: 'CURRENT_VERSION',
+	},
+	roleScopes: {
+		moderator: ['MODERATOR_ROLES_IDS_HERE'],
 	},
 	roles: {
 		citizen: 'ROLE_ID_HERE',

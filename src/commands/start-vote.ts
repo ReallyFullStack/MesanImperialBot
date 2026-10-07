@@ -4,6 +4,7 @@ import {
 	ButtonStyle,
 	ComponentType,
 	EmbedBuilder,
+	GuildMemberRoleManager,
 	Role,
 	RoleColors,
 	SlashCommandBuilder,
@@ -40,6 +41,14 @@ export default new ApplicationCommand({
 		)
 		.addNumberOption((o) => o.setName('duration').setDescription('Number of hours')),
 	async execute(interaction): Promise<void> {
+		if (
+			!(interaction.member!.roles as GuildMemberRoleManager).cache.hasAny(
+				...config.roleScopes.moderator,
+			)
+		) {
+			throw new Error('You do not have the required permissions to execute this action.')
+		}
+
 		const role =
 			interaction.options.getRole('voters', false) ||
 			interaction.guild!.roles.cache.get(config.roles.mp)!
