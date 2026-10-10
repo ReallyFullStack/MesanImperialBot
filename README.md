@@ -15,7 +15,7 @@ cd MesanImperialBot
 npm install
 ```
 
-It has for major dependencies `discord.js`, `better-sqlite3`, `@googleapis/docs`, `@googleapis/drive` and `dotenv`.
+It has for major dependencies `discord.js`, `better-sqlite3`, `@googleapis/docs` and `@googleapis/drive`.
 
 Then, you will have to create an SQLite3 database at `data/database.db` based on the `data/database.sql` schema:
 
