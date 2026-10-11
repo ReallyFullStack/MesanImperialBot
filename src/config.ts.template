@@ -13,7 +13,7 @@ export interface ImperialBotConfig {
 	}
 }
 
-const config: ImperialBotConfig = {
+const config = {
 	infos: {
 		botName: 'YOUR_BOT_NAME',
 		brandColor: '#HEX_BRAND_COLOR_HERE',
@@ -41,7 +41,7 @@ const config: ImperialBotConfig = {
 		owner: 'YOUR_USERID_HERE',
 		prefix: '!',
 	},
-}
+} as const satisfies ImperialBotConfig
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = config.googleApi.credentialsPath
 
