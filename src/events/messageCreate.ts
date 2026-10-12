@@ -7,7 +7,7 @@ const { prefix: PREFIX } = config.discord
 export default new Event({
 	name: Events.MessageCreate,
 	async execute(message: Message): Promise<void> {
-		// ! Message content is a priviliged intent now!
+		// ! Message content is a privileged intent now!
 
 		// Handles non-slash commands, only recommended for deploy commands
 

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last Updated: **01/07/2025**
+Last Updated: **12/10/2026**
 
 ## 1. Information We Collect
 
@@ -33,4 +33,4 @@ use of the bot after changes indicates your acceptance of the new terms.
 
 ## 6. Contact Information
 
-If you have any questions or concerns about this Privacy Policy, please contact[reallyfull.stack@gmail.com](mailto:reallyfull.stack@gmail.com).
+If you have any questions or concerns about this Privacy Policy, please contact [reallyfull.stack@gmail.com](mailto:reallyfull.stack@gmail.com).

@@ -1,9 +1,6 @@
 # Terms of Service
 
-Last Updated: **01/07/2025**
-
-By using this bot, you agree to comply with these Terms of Service. If you do not agree, please do
-not use the bot.
+Last Updated: **12/10/2026**
 
 ## 1. Acceptance of Terms
 

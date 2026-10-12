@@ -67,7 +67,7 @@ export default class ApplicationCommand {
 					} catch (error) {
 						console.error(error)
 						await interaction.reply({
-							content: 'An error occured when attempting to execute that command!',
+							content: 'An error occurred when attempting to execute that command!',
 							flags: MessageFlags.Ephemeral,
 						})
 					}

@@ -12,7 +12,7 @@ export default new ApplicationCommand({
 		const { botName, brandColor } = config.infos
 		const { citizen: citizenRoleID } = config.roles
 
-		const citizenRole = (await interaction.guild!.roles.fetch(citizenRoleID))!
+		const citizenRole = await interaction.guild!.roles.fetch(citizenRoleID)
 		const viewLawId = (await interaction.guild!.commands.fetch()).find(
 			(c) => c.name === viewLaw.data.name,
 		)?.id

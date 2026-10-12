@@ -31,13 +31,15 @@ export default new ApplicationCommand({
 				.setAutocomplete(true),
 		)
 		.addRoleOption((o) =>
-			o.setName('voters').setDescription('Which role can vote. Defaults to citizens.'),
+			o
+				.setName('voters')
+				.setDescription('Which role can vote. Defaults to Members of Parliament.'),
 		)
 		.addStringOption((option) =>
 			option
 				.setName('options')
 				.setDescription(
-					'Comma-separated list of options voters can chose. Defaults to "for, against, blank".',
+					'Comma-separated list of options voters can choose from. Defaults to "for, against, blank".',
 				),
 		)
 		.addNumberOption((o) => o.setName('duration').setDescription('Number of hours')),

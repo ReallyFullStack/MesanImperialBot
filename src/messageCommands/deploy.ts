@@ -21,7 +21,7 @@ export default new MessageCommand({
 			return
 		}
 
-		console.log(`Undeploying commands by ${message.author.tag}!}`)
+		console.log(`Undeploying commands by ${message.author.tag}!`)
 
 		if (args[0].toLowerCase() === 'global') {
 			// global deployment

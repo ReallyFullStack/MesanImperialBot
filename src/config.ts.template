@@ -37,7 +37,7 @@ const config = {
 	discord: {
 		token: 'BOT_TOKEN_HERE',
 		clientId: 'BOT_CLIENTID_HERE',
-		defaultGuildId: 'DEFAULTGUID_ID_HERE',
+		defaultGuildId: 'DEFAULTGUILD_ID_HERE',
 		owner: 'YOUR_USERID_HERE',
 		prefix: '!',
 	},

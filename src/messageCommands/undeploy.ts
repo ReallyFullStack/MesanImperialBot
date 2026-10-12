@@ -16,15 +16,11 @@ export default new MessageCommand({
 		}
 
 		if (args[0].toLowerCase() === 'global') {
-			// global undeployment
-
 			// undeploy the commands
 			await client.application?.commands.set([])
 
 			await message.reply({ content: 'Undeploying!' })
 		} else if (args[0].toLowerCase() === 'guild') {
-			// guild deployment
-
 			// undeploy the commands
 			await message.guild?.commands.set([])
 
