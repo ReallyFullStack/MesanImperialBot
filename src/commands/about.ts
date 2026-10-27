@@ -12,11 +12,11 @@ export default new ApplicationCommand({
 		const { botName, brandColor } = config.infos
 		const { citizen: citizenRoleID } = config.roles
 
-		const citizenRole = await interaction.guild!.roles.fetch(citizenRoleID)
+		const citizenCount = (await interaction.guild!.roles.fetchMemberCounts()).get(citizenRoleID)
 		const viewLawId = (await interaction.guild!.commands.fetch()).find(
 			(c) => c.name === viewLaw.data.name,
 		)?.id
-		if (citizenRole == undefined) {
+		if (citizenCount == undefined) {
 			throw new Error('Incorrect citizen role ID: ' + citizenRoleID)
 		}
 
@@ -35,7 +35,7 @@ export default new ApplicationCommand({
 						},
 						{
 							name: 'Citizens',
-							value: citizenRole.members.size.toString(),
+							value: citizenCount.toString(),
 							inline: true,
 						},
 					)
