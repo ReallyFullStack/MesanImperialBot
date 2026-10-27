@@ -6,7 +6,7 @@ import config from '../config.js'
 export default new ApplicationCommand({
 	data: new SlashCommandBuilder()
 		.setName('about')
-		.setDescription('Information about Imperial Bot'),
+		.setDescription(`Information about ${config.infos.botName}`),
 	async execute(interaction): Promise<void> {
 		const { author, github, version } = config.about
 		const { botName, brandColor } = config.infos
