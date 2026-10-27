@@ -5,6 +5,7 @@ import {
 	ButtonStyle,
 	Colors,
 	ComponentType,
+	DiscordAPIError,
 	EmbedBuilder,
 	Message,
 	RepliableInteraction,
@@ -86,7 +87,14 @@ export const makeLawEmbed = async (
 		;(data.components![0] as ActionRowBuilder<ButtonBuilder>).components.forEach((b) =>
 			b.setDisabled(true),
 		)
-		await interaction.editReply({ components: [...data.components!] })
+
+		await interaction.editReply({ components: [...data.components!] }).catch((e: Error) => {
+			if (e instanceof DiscordAPIError && e.code == 10008) {
+				return
+			}
+
+			throw e
+		})
 	})
 }
 
@@ -150,7 +158,13 @@ export default new ApplicationCommand({
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		collector.on('end', async () => {
 			row.components.forEach((c) => c.setDisabled(true))
-			await interaction.editReply({ components: [row] })
+			await interaction.editReply({ components: [row] }).catch((e: Error) => {
+				if (e instanceof DiscordAPIError && e.code == 10008) {
+					return
+				}
+
+				throw e
+			})
 		})
 	},
 	async autocomplete(interaction): Promise<void> {
