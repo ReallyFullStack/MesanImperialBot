@@ -99,6 +99,11 @@ function parseParagraphElement(e: docs_v1.Schema$ParagraphElement): string {
 			e.textRun.content!.slice(start + content.length),
 		]
 
+		content = content.replaceAll('*', '\\*')
+		content = content.replaceAll('__', '\\_\\_')
+		content = content.replaceAll('~~', '\\~\\~')
+		content = content.replaceAll(/\[(.*?)\]\((.*?)\)/g, '\\[$1\\]\\($2\\)')
+
 		if (style.italic == true) {
 			content = `*${content}*`
 		}
