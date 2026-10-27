@@ -1,6 +1,6 @@
 export interface ImperialBotConfig {
 	infos: { botName: string; brandColor: `#${string}` }
-	about: { author: string; github: string; version: string }
+	about: { author: string; github: `${string}/`; version: string }
 	roleScopes: { [k: string]: `${number}`[] }
 	roles: { [k: string]: `${number}` }
 	googleApi: { serviceAccountEmail: string; credentialsPath: '../data/googleapicredentials.json' }
